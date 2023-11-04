@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// 環境変数をcmdから整形して取得
 func getWindowsEnvVariable(varName string) string {
 	cmd := exec.Command("cmd", "/C", "echo", "%"+varName+"%")
 	output, err := cmd.CombinedOutput()

@@ -11,16 +11,19 @@ func ProcessEntries(feed Feed) {
 	// 概要ファイルの英語、日本語版
 	english_ab := "abstract.md"
 	japanese_ab := "abstract_ja.md"
+	// 見出しに日付を付ける
+	WriteTitle(filepath.Join("docs", today, english_ab), today)
+	WriteTitle(filepath.Join("docs", today, japanese_ab), today)
 	for _, entry := range feed.Entries {
 		// タイトルから改行を取り除く
 		title := strings.ReplaceAll(entry.Title, "\n", "")
 		// 原文のリンク集
-		WriteToFile(filepath.Join("docs", today, english_ab), title)
+		WriteSubTitle(filepath.Join("docs", today, english_ab), title)
 		WriteToFile(filepath.Join("docs", today, english_ab), entry.ID)
 		// 翻訳後の概要とタイトル
 		translateText, _ := Translate(entry.Summary, "en", "ja")
 		translateText = strings.ReplaceAll(translateText, "\n", "")
-		WriteToFile(filepath.Join("docs", today, japanese_ab), title)
+		WriteSubTitle(filepath.Join("docs", today, japanese_ab), title)
 		WriteToFile(filepath.Join("docs", today, japanese_ab), entry.ID)
 		WriteToFile(filepath.Join("docs", today, japanese_ab), translateText)
 		// DLの前処理

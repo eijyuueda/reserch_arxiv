@@ -19,6 +19,7 @@ type Feed struct {
 	Entries []Entry `xml:"entry"`
 }
 
+// XML形式にパースする
 func ParseXML(body []byte) (Feed, error) {
 	var feed Feed
 	err := xml.Unmarshal(body, &feed)

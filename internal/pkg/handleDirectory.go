@@ -3,22 +3,39 @@ package pkg
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
+// ディレクトリの存在を確認し、存在しなければディレクトリを作成する。
 func HandleDirectory(dirName string) {
-	// ディレクトリの存在を確認し、存在する場合は削除する
 	if _, err := os.Stat(dirName); err == nil {
-		err := os.RemoveAll(dirName)
-		if err != nil {
-			fmt.Println("Error deleting existing directory:", err)
-			return
-		}
+		fmt.Println("Directory already exists:", dirName)
+		return
 	}
 
-	// 新しいディレクトリを作成する
+	fmt.Println("Making Directory:", dirName)
 	err := os.Mkdir(dirName, os.ModePerm)
 	if err != nil {
 		fmt.Println("Error creating directory:", err)
 		return
 	}
+}
+
+// mdファイルの削除
+func DeleteMarkdownFiles(dirName string) error {
+	// ディレクトリ内のファイルを取得
+	fileList, err := filepath.Glob(filepath.Join(dirName, "*.md"))
+	if err != nil {
+		return err
+	}
+
+	// 各ファイルを削除
+	for _, file := range fileList {
+		err := os.Remove(file)
+		if err != nil {
+			return err
+		}
+		fmt.Println("Deleted:", file)
+	}
+	return nil
 }
