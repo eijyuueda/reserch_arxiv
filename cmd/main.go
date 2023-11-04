@@ -48,8 +48,10 @@ func main() {
 	pkg.HandleDirectory("docs")
 	pkg.HandleDirectory(filepath.Join("docs", today))
 	pkg.DeleteMarkdownFiles(filepath.Join("docs", today))
+	pkg.DeletePdfFiles(filepath.Join("docs", today))
 
 	// エントリーの処理
 	fmt.Println("processing entries...")
 	pkg.ProcessEntries(feed)
+	// mdファイルのマージ版ドキュメントを作成してdocs配下に入れるとか
 }

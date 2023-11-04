@@ -39,3 +39,22 @@ func DeleteMarkdownFiles(dirName string) error {
 	}
 	return nil
 }
+
+// pdfファイルの削除
+func DeletePdfFiles(dirName string) error {
+	// ディレクトリ内のファイルを取得
+	fileList, err := filepath.Glob(filepath.Join(dirName, "*.pdf"))
+	if err != nil {
+		return err
+	}
+
+	// 各ファイルを削除
+	for _, file := range fileList {
+		err := os.Remove(file)
+		if err != nil {
+			return err
+		}
+		fmt.Println("Deleted:", file)
+	}
+	return nil
+}
